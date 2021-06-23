@@ -7,4 +7,21 @@ router.get('/', function(req, res, next) {
   res.render("musicadd", {title: "musiqa qo`shish sahifasi"})
 });
 
+router.post('/add', function(req, res , next){
+  const music = new Music();
+
+  music.name = req.body.name;
+  music.singer = req.body.singer;
+  music.comment = req.body.comment;
+
+  music.save((err) => {
+    if(err) console.log(err);
+    else{
+      res.redirect('/')
+    }
+  })
+
+})
+
+
 module.exports = router;
