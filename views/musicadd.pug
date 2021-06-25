@@ -2,7 +2,7 @@ extends layout
 
 block content 
     h1= title 
-    form
+    form(method="POST" action="/music/add")
       .form-group
         label(for='name') Musiqa qo`shish
         input#name.form-control(type='text' name="name")

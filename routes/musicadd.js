@@ -3,11 +3,12 @@ const Music = require('../model/Music');
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render("musicadd", {title: "musiqa qo`shish sahifasi"})
+router.get('/add', function(req, res, next) {
+  res.render("Musicadd", {title: "musiqa qo`shish sahifasi"})
 });
 
 router.post('/add', function(req, res , next){
+  console.log('yubordik');
   const music = new Music();
 
   music.name = req.body.name;
@@ -22,6 +23,4 @@ router.post('/add', function(req, res , next){
   })
 
 })
-
-
 module.exports = router;
