@@ -3,24 +3,41 @@ const Music = require('../model/Music');
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/add', function(req, res, next) {
-  res.render("Musicadd", {title: "musiqa qo`shish sahifasi"})
+router.get('/add', function (req, res, next) {
+  res.render("Musicadd", { title: "musiqa qo`shish sahifasi" })
 });
 
-router.post('/add', function(req, res , next){
-  console.log('yubordik');
-  const music = new Music();
+router.post('/add', function (req, res, next) {
 
-  music.name = req.body.name;
-  music.singer = req.body.singer;
-  music.comment = req.body.comment;
+  req.checkBody('name', 'iltimos musiqa nomini kiriting').notEmpty()
+  req.checkBody('singer', 'iltimos musiqa avtorini kiriting').notEmpty()
+  req.checkBody('comment', 'iltimos musiqa izohni kiriting').notEmpty()
 
-  music.save((err) => {
-    if(err) console.log(err);
-    else{
-      res.redirect('/')
-    }
-  })
+  const errors = req.validationErrors();
+
+  if (errors) {
+    res.render('musicadd', {
+      title: "Musiqa qo`shishda validator ishlayabdi",
+      errors : errors
+    })
+  }
+  else {
+    console.log('yubordik');
+    const music = new Music();
+
+    music.name = req.body.name;
+    music.singer = req.body.singer;
+    music.comment = req.body.comment;
+
+    music.save((err) => {
+      if (err) console.log(err);
+      else {
+        res.redirect('/')
+      }
+    })
+  }
+
+
 
 })
 module.exports = router;
