@@ -32,12 +32,11 @@ router.post('/add', function (req, res, next) {
     music.save((err) => {
       if (err) console.log(err);
       else {
+        req.flash('success', "Musiqa qo`shildi")
         res.redirect('/')
       }
     })
   }
-
-
 
 })
 module.exports = router;
