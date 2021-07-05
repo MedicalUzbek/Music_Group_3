@@ -16,8 +16,13 @@ html
             a.nav-link(href='/')  Bosh Sahifa
           li.nav-item.active
             a.nav-link(href='/music/add')  Musiqa Qo`shish sahifasi
-          li.nav-item.active
-            a.nav-link(href='/register') Ro`yhatdan o`tish 
+      ul.navbar-nav.mr-right 
+          li.nav-item
+            a.nav-link(href='/register') Ro`yhatdan o`tish
+          li.nav-item
+            a.nav-link(href='/login') Login 
+          li.nav-item
+            a.nav-link(href='/logout') chiqish
   .container          
     != messages('message', locals)
     if errors 

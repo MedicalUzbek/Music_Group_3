@@ -1,7 +1,10 @@
 const express = require('express');
 const Music = require('../model/Music');
 const router = express.Router();
-const User = require('../model/User')
+const User = require('../model/User');
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
+
 
 /* GET users listing. */
 router.get('/register', function (req, res, next) {
@@ -38,6 +41,22 @@ router.post('/register', function (req, res, next) {
 			password: password,
 		});
 
+		bcrypt.genSalt(10, (err, pass) => {
+			bcrypt.hash(newUser.password, pass, (err, hash) => {
+				if(err) console.log(err);
+				newUser.password = hash;
+				newUser.save((err) => {
+					if(err) console.log(err);
+					else{
+						req.flash("gander", 'royhatdan o`tdingiz');
+						res.redirect('/login')
+					}
+				})
+			})
+		})
+
+
+
 		newUser.save((err) => {
 			if (err) console.log(err);
 			else {
@@ -46,7 +65,6 @@ router.post('/register', function (req, res, next) {
 			}
 		})
 
-
 	}
 
 })
@@ -54,6 +72,24 @@ router.post('/register', function (req, res, next) {
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
 	res.render("login", { title: "Saytga kirish" });
+});
+
+/* post users listing. */
+router.post('/login', function (req, res, next) {
+	passport.authenticate('local', {
+		successRedirect: '/',
+		failureRedirect: '/login',
+		failureFlash: true
+	})(req, res, next);
+});
+
+
+/* GET users listing. */
+router.get('/loginout', function (req, res, next) {
+	req.logOut();
+	req.flash('success', "Tizimdan chiqdingiz");
+	res.redirect('/login');
+	
 });
 
 
