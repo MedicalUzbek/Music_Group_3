@@ -1,9 +1,10 @@
 const express = require('express');
 const Music = require('../model/Music');
 const router = express.Router();
+const eA = require('../middleware/eA');
 
 /* GET users listing. */
-router.get('/add', function (req, res, next) {
+router.get('/add', eA, function (req, res, next) {
   res.render("Musicadd", { title: "musiqa qo`shish sahifasi" })
 });
 

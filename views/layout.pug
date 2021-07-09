@@ -14,15 +14,19 @@ html
         ul.navbar-nav.mr-auto
           li.nav-item.active
             a.nav-link(href='/')  Bosh Sahifa
-          li.nav-item.active
-            a.nav-link(href='/music/add')  Musiqa Qo`shish sahifasi
+          if user
+              li.nav-item.active
+                a.nav-link(href='/music/add')  Musiqa Qo`shish sahifasi
       ul.navbar-nav.mr-right 
+        if user
+          li.nav-item
+            a.nav-link(href='/logout') chiqish
+        else 
           li.nav-item
             a.nav-link(href='/register') Ro`yhatdan o`tish
           li.nav-item
             a.nav-link(href='/login') Login 
-          li.nav-item
-            a.nav-link(href='/logout') chiqish
+         
   .container          
     != messages('message', locals)
     if errors 
