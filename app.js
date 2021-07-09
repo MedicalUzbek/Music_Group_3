@@ -82,6 +82,15 @@ db.once('open', function() {
   console.log('Mongodbga global ulandik');
 });
 
+require('./cf/passport')(passport)
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('*', (req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+})
+
 
 app.use(logger('dev'));
 app.use(express.json());

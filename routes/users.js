@@ -1,5 +1,4 @@
 const express = require('express');
-const Music = require('../model/Music');
 const router = express.Router();
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
@@ -17,7 +16,7 @@ router.post('/register', function (req, res, next) {
 	req.checkBody('username', 'iltimos usernamingizni yozing').notEmpty();
 	req.checkBody('email', 'iltimos email yozing').notEmpty();
 	req.checkBody('password', 'iltimos parol yozing').notEmpty();
-	req.checkBody('password2', 'iltimos parolingizni tasdiqlang ').notEmpty();
+	req.checkBody('password2', 'iltimos parolingizni tasdiqlang ').equals(req.body.password).notEmpty();
 
 	const errors = req.validationErrors();
 
@@ -48,7 +47,7 @@ router.post('/register', function (req, res, next) {
 				newUser.save((err) => {
 					if(err) console.log(err);
 					else{
-						req.flash("gander", 'royhatdan o`tdingiz');
+						req.flash("success", 'royhatdan o`tdingiz');
 						res.redirect('/login')
 					}
 				})
@@ -57,13 +56,7 @@ router.post('/register', function (req, res, next) {
 
 
 
-		newUser.save((err) => {
-			if (err) console.log(err);
-			else {
-				req.flash('success', "Musiqa qo`shildi")
-				res.redirect('/login')
-			}
-		})
+		
 
 	}
 
@@ -85,11 +78,10 @@ router.post('/login', function (req, res, next) {
 
 
 /* GET users listing. */
-router.get('/loginout', function (req, res, next) {
+router.get('/logout', function (req, res, next) {
 	req.logOut();
 	req.flash('success', "Tizimdan chiqdingiz");
 	res.redirect('/login');
-	
 });
 
 
